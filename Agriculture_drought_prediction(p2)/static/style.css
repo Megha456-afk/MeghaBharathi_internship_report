@@ -1,0 +1,323 @@
+/* ---------------- GENERAL ---------------- */
+
+body{
+font-family: Arial, sans-serif;
+margin:0;
+padding:0;
+}
+
+/* ---------------- LOGIN PAGE ---------------- */
+
+.login-bg{
+background: linear-gradient(135deg,#4facfe,#00f2fe);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.login-box{
+background:#e6feff;
+padding:40px;
+border-radius:15px;
+width:360px;
+text-align:center;
+color:black;
+box-shadow:0 15px 35px rgba(0,0,0,0.3);
+}
+
+.login-box h1{
+margin-bottom:10px;
+}
+
+.login-box h2{
+margin-bottom:25px;
+color:#555;
+}
+
+/* LOGIN INPUTS */
+
+.login-box input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+/* LOGIN BUTTON (LIGHT BLUE) */
+
+.login-box button{
+width:100%;
+padding:12px;
+background:#4facfe;
+border:none;
+color:white;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.login-box button:hover{
+background:#007bff;
+}
+
+/* ---------------- DASHBOARD PAGE ---------------- */
+
+.dashboard-bg{
+background: linear-gradient(135deg, #4facfe, #00f2fe);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.dashboard-card{
+background:white;
+padding:40px;
+border-radius:12px;
+width:350px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+text-align:left;
+}
+
+/* ---------------- INPUT FIELDS ---------------- */
+
+label{
+font-weight:bold;
+margin-top:10px;
+display:block;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:5px;
+margin-bottom:15px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+/* ---------------- DASHBOARD BUTTON ---------------- */
+
+.dashboard-card button{
+width:100%;
+padding:12px;
+background:#4CAF50;
+border:none;
+color:white;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.dashboard-card button:hover{
+background:#2e8b57;
+transform:scale(1.02);
+}
+
+/* ---------------- RESULT PAGE BACKGROUND ---------------- */
+
+.rain-bg{
+background: linear-gradient(#4facfe, #00f2fe);
+animation: rainMove 6s infinite linear;
+color:white;
+text-align:center;
+height:100vh;
+}
+
+.drought-bg{
+background: linear-gradient(#ff7e5f, #feb47b);
+animation: heatWave 4s infinite alternate;
+color:white;
+text-align:center;
+height:100vh;
+}
+
+/* Rain animation */
+
+@keyframes rainMove{
+0%{background-position:0 0;}
+100%{background-position:0 500px;}
+}
+
+/* Heat animation */
+
+@keyframes heatWave{
+0%{filter:brightness(1);}
+100%{filter:brightness(1.2);}
+}
+
+/* ---------------- RESULT PAGE CARD ---------------- */
+
+.result-container{
+background: rgba(255,255,255,0.95);
+width:900px;
+margin:auto;
+margin-top:60px;
+padding:40px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+color:black;
+}
+
+.prediction{
+font-size:28px;
+margin:15px 0;
+color:#333;
+}
+
+/* ---------------- RESULT LAYOUT ---------------- */
+
+.result-layout{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:40px;
+margin-top:20px;
+}
+
+.result-left{
+flex:1;
+}
+
+.result-right{
+flex:1;
+text-align:center;
+}
+
+.result-gif{
+max-width:350px;
+border-radius:10px;
+}
+
+.chart-box{
+width:260px;
+margin:auto;
+}
+
+/* ---------------- BACK BUTTON ---------------- */
+
+.back-btn{
+padding:12px 20px;
+background:#4CAF50;
+border:none;
+color:white;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.back-btn:hover{
+background:#2e8b57;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media(max-width:900px){
+
+.result-container{
+width:90%;
+}
+
+.result-layout{
+flex-direction:column;
+}
+
+.result-gif{
+max-width:250px;
+}
+
+}
+
+/* ---------------- ERROR MESSAGE ---------------- */
+
+.error-message{
+color:red;
+margin-bottom:15px;
+font-weight:bold;
+}
+
+/* ---------------- SOLUTION CARD ---------------- */
+
+.solution-box{
+margin-top:30px;
+padding:25px;
+background:rgba(255,255,255,0.95);
+border-radius:15px;
+box-shadow:0 8px 25px rgba(0,0,0,0.2);
+text-align:left;
+}
+
+.solution-box h3{
+text-align:center;
+margin-bottom:20px;
+color:#333;
+}
+
+/* solution list */
+
+.solution-list{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+/* each item */
+
+.solution-item{
+background:#f0f9ff;
+padding:12px;
+border-radius:8px;
+font-size:16px;
+border-left:5px solid #4facfe;
+transition:0.3s;
+}
+
+/* hover effect */
+
+.solution-item:hover{
+transform:translateX(5px);
+background:#e0f3ff;
+}
+
+.model-info{
+margin-top:20px;
+padding:20px;
+background:#f0f9ff;
+border-radius:10px;
+text-align:left;
+border-left:5px solid #4facfe;
+}
+/* Bigger doughnut */
+.chart-box canvas{
+width:300px !important;
+height:300px !important;
+}
+
+/* Layout spacing */
+.result-layout{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:40px;
+margin-top:20px;
+}
+
+/* Metrics section */
+.metrics-section{
+margin-top:40px;
+padding:25px;
+background:rgba(255,255,255,0.95);
+border-radius:15px;
+box-shadow:0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* Bigger metrics graph */
+#metricsChart{
+width:100% !important;
+height:350px !important;
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7fa;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 20px;
+        }
+
+        .section {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        .logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<a href="/logout" class="logout">Logout</a>
+
+<h1>📊 GP-SMS AI Dashboard</h1>
+
+<!-- ===================== -->
+<!-- 📈 PREDICTION -->
+<!-- ===================== -->
+<div class="section">
+    <h2>📈 Referral Predictions</h2>
+    <canvas id="predictionChart"></canvas>
+
+    <table>
+        <tr>
+            <th>Doctor</th>
+            <th>Week</th>
+            <th>Predicted Referrals</th>
+            <th>Trend</th>
+        </tr>
+
+        {% for row in pred %}
+        <tr>
+            <td>{{ row.REFERRING_DOCTOR }}</td>
+            <td>{{ row.PREDICTED_WEEK }}</td>
+            <td>{{ row.PREDICTED_REFERRALS }}</td>
+            <td>{{ row.TREND_DIRECTION }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<!-- ===================== -->
+<!-- 📊 SEGMENTATION -->
+<!-- ===================== -->
+<div class="section">
+    <h2>📊 Doctor Segments</h2>
+    <canvas id="segmentChart"></canvas>
+
+    <table>
+        <tr>
+            <th>Doctor</th>
+            <th>Total Referrals</th>
+            <th>Segment</th>
+        </tr>
+
+        {% for row in seg %}
+        <tr>
+            <td>{{ row.REFERRING_DOCTOR }}</td>
+            <td>{{ row.TOTAL_REFERRALS }}</td>
+            <td>{{ row.SEGMENT }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<!-- ===================== -->
+<!-- 🚨 ANOMALY -->
+<!-- ===================== -->
+<div class="section">
+    <h2>🚨 Anomaly Detection</h2>
+    <canvas id="anomalyChart"></canvas>
+
+    <table>
+        <tr>
+            <th>Doctor</th>
+            <th>Week</th>
+            <th>Count</th>
+            <th>Flag</th>
+        </tr>
+
+        {% for row in anom %}
+        <tr>
+            <td>{{ row.REFERRING_DOCTOR }}</td>
+            <td>{{ row.WEEK }}</td>
+            <td>{{ row.WEEKLY_COUNT }}</td>
+            <td>{{ row.FLAG }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<script>
+let pred = JSON.parse('{{ pred|tojson|safe }}');
+let seg  = JSON.parse('{{ seg|tojson|safe }}');
+let anom = JSON.parse('{{ anom|tojson|safe }}');
+
+// Prediction Chart
+new Chart(document.getElementById("predictionChart"), {
+    type: 'line',
+    data: {
+        labels: pred.map(x => x.PREDICTED_WEEK),
+        datasets: [{
+            label: "Predicted Referrals",
+            data: pred.map(x => x.PREDICTED_REFERRALS)
+        }]
+    }
+});
+
+// Segment Chart
+new Chart(document.getElementById("segmentChart"), {
+    type: 'bar',
+    data: {
+        labels: seg.map(x => x.REFERRING_DOCTOR),
+        datasets: [{
+            label: "Total Referrals",
+            data: seg.map(x => x.TOTAL_REFERRALS)
+        }]
+    }
+});
+
+// Anomaly Chart
+new Chart(document.getElementById("anomalyChart"), {
+    type: 'bar',
+    data: {
+        labels: anom.map(x => x.WEEK),
+        datasets: [{
+            label: "Anomalies",
+            data: anom.map(x => x.WEEKLY_COUNT)
+        }]
+    }
+});
+</script>
+
+</body>
+</html>

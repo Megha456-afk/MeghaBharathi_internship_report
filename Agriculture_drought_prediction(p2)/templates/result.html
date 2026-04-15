@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Drought Prediction Result</title>
+<link rel="stylesheet" href="/static/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="{{ background }}">
+
+<div class="result-container">
+
+<h1>🌾 Drought Prediction Result</h1>
+
+<h2>{{ prediction }}</h2>
+
+<!-- MODEL INFO -->
+<div class="model-info">
+<p><strong>Algorithm:</strong> {{ model_name }}</p>
+<p><strong>Accuracy:</strong> {{ accuracy }}%</p>
+</div>
+
+<!-- RESULT LAYOUT -->
+<div class="result-layout">
+
+<!-- LEFT -->
+<div class="result-left">
+
+<p><strong>Probability:</strong> {{ probability }}%</p>
+<p><strong>Risk Level:</strong> {{ severity }}</p>
+
+<div class="chart-box">
+<canvas id="probChart"></canvas>
+</div>
+
+</div>
+
+<!-- RIGHT -->
+<div class="result-right">
+<img src="{{ url_for('static', filename=image) }}" class="result-gif">
+</div>
+
+</div>
+
+<!-- 🔥 METRICS GRAPH FULL WIDTH -->
+<div class="metrics-section">
+
+<h3>📊 Algorithm Comparison</h3>
+
+<canvas id="metricsChart"></canvas>
+
+</div>
+
+<!-- SOLUTIONS -->
+<div class="solution-box">
+<h3>🌾 Recommended Actions</h3>
+
+<div class="solution-list">
+{% for s in solution %}
+<div class="solution-item">✔ {{ s }}</div>
+{% endfor %}
+</div>
+
+</div>
+
+<br>
+
+<a href="/dashboard">
+<button class="back-btn">Predict Again</button>
+</a>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+// Doughnut
+let p = parseFloat("{{ probability }}") || 0;
+
+new Chart(document.getElementById("probChart"), {
+type: 'doughnut',
+data: {
+labels: ['Drought','Safe'],
+datasets: [{
+data: [p, 100 - p],
+backgroundColor: ['#ff4d4d','#4CAF50']
+}]
+},
+options:{
+responsive:true,
+maintainAspectRatio:false
+}
+});
+
+// Metrics
+let rf = JSON.parse('{{ rf_metrics | tojson | safe }}');
+let lr = JSON.parse('{{ lr_metrics | tojson | safe }}');
+
+new Chart(document.getElementById("metricsChart"), {
+type: 'bar',
+data: {
+labels: ['Accuracy','Precision','Recall','F1'],
+datasets: [
+{
+label: 'Random Forest',
+data: rf,
+backgroundColor: '#4CAF50'
+},
+{
+label: 'Logistic Regression',
+data: lr,
+backgroundColor: '#ff4d4d'
+}
+]
+},
+options:{
+responsive:true,
+maintainAspectRatio:false,
+plugins:{
+legend:{ position:'bottom' }
+}
+}
+});
+
+});
+</script>
+
+</body>
+</html>
